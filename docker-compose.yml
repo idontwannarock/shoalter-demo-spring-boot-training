@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  account-db:
+    container_name: account-db
+    image: mysql:8
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: account
+      MYSQL_USER: user
+      MYSQL_PASSWORD: 123456
+    ports:
+      - "3306:3306"
+  account-api:
+    container_name: account-api
+    build:
+      context: account-api
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"

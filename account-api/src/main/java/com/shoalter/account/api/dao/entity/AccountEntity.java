@@ -14,8 +14,10 @@ public class AccountEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
+	@Column(unique = true, nullable = false)
 	private String username;
 
+	@Column(nullable = false)
 	private String password;
 
 	@Column(columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP")

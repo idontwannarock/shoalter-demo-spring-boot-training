@@ -1,6 +1,7 @@
 package com.shoalter.account.api.controller;
 
 import com.shoalter.account.api.controller.dto.response.Response;
+import com.shoalter.account.api.exception.ClientErrorException;
 import io.jsonwebtoken.JwtException;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -12,13 +13,14 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @Slf4j
-@ControllerAdvice
+@RestControllerAdvice
 public class ExceptionHandlers {
 
 	@ApiResponse(
@@ -31,7 +33,9 @@ public class ExceptionHandlers {
 			MissingServletRequestParameterException.class,
 			HttpMessageNotReadableException.class,
 			HttpRequestMethodNotSupportedException.class,
-			IllegalArgumentException.class
+			IllegalArgumentException.class,
+			MethodArgumentNotValidException.class,
+			ClientErrorException.class
 	})
 	public final Response<Void> handleBadRequest(Exception e) {
 		return Response.warn(e.getMessage());

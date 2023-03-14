@@ -6,3 +6,13 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create-drop
+
+jwt:
+  access-token:
+    sign:
+      key: ${ACCESS_TOKEN_SECRET_KEY}
+    expiration: ${ACCESS_TOKEN_EXPIRATION}
+  refresh-token:
+    sign:
+      key: ${REFRESH_TOKEN_SECRET_KEY}
+    expiration: ${2592000000}

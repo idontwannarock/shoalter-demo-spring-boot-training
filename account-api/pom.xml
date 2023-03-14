@@ -19,6 +19,7 @@
         <java.version>11</java.version>
 
         <springdoc-openapi-ui.version>1.6.14</springdoc-openapi-ui.version>
+        <jjwt.verison>0.9.1</jjwt.verison>
     </properties>
 
     <dependencies>
@@ -53,6 +54,13 @@
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-security</artifactId>
             <version>${springdoc-openapi-ui.version}</version>
+        </dependency>
+
+        <!-- JWT -->
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>${jjwt.verison}</version>
         </dependency>
 
         <dependency>

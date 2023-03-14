@@ -20,6 +20,8 @@ public class AccountEntity {
 	@Column(nullable = false)
 	private String password;
 
+	private String refreshToken;
+
 	@Column(columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP")
 	private LocalDateTime createTime;
 

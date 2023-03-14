@@ -1,0 +1,24 @@
+{
+  "properties": [
+    {
+      "name": "jwt.access-token.sign.key",
+      "type": "java.lang.String",
+      "description": "Sign key of access token."
+    },
+    {
+      "name": "jwt.access-token.expiration",
+      "type": "java.lang.String",
+      "description": "Expiration time in millisecond of access token."
+    },
+    {
+      "name": "jwt.refresh-token.sign.key",
+      "type": "java.lang.String",
+      "description": "Sign key of refresh token."
+    },
+    {
+      "name": "jwt.refresh-token.expiration",
+      "type": "java.lang.String",
+      "description": "Expiration time in millisecond of refresh token."
+    }
+  ]
+}

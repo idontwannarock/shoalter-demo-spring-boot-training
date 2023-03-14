@@ -1,5 +1,6 @@
-package com.shoalter.account.api.service;
+package com.shoalter.account.api.usecase;
 
+import com.shoalter.account.api.config.security.service.TokenUserService;
 import com.shoalter.account.api.controller.dto.response.auth.RegisterResponse;
 import com.shoalter.account.api.dao.entity.AccountEntity;
 import com.shoalter.account.api.dao.repository.AccountRepository;
@@ -16,6 +17,8 @@ public class RegisterUseCase {
 	private final AccountRepository accountRepository;
 
 	private final PasswordEncoder passwordEncoder;
+
+	private final TokenUserService tokenUserService;
 
 	public RegisterResponse start(String username, String password) {
 		if (accountRepository.findByUsername(username).isPresent()) {
@@ -34,8 +37,16 @@ public class RegisterUseCase {
 	}
 
 	private RegisterResponse convertToResponse(AccountEntity newAccount) {
-		var response = new RegisterResponse();
-		response.setUserId(newAccount.getId());
-		return response;
+		String refreshToken = generateRefreshToken(newAccount);
+		return new RegisterResponse(
+				tokenUserService.toAccessToken(newAccount.getId(), newAccount.getUsername()),
+				refreshToken);
+	}
+
+	private String generateRefreshToken(AccountEntity newAccount) {
+		String refreshToken = tokenUserService.toRefreshToken(newAccount.getId());
+		newAccount.setRefreshToken(refreshToken);
+		accountRepository.save(newAccount);
+		return refreshToken;
 	}
 }

@@ -5,9 +5,9 @@ import lombok.Value;
 import java.io.Serializable;
 
 @Value
-public class RegisterResponse implements Serializable {
+public class LoginResponse implements Serializable {
 
-	private static final long serialVersionUID = 7227232633415633505L;
+	private static final long serialVersionUID = -751620062349617972L;
 
 	String accessToken;
 	String refreshToken;

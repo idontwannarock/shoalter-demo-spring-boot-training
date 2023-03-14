@@ -9,7 +9,5 @@ public interface AccountRepository extends JpaRepository<AccountEntity, Integer>
 
 	Optional<AccountEntity> findByUsername(String username);
 
-	Optional<AccountEntity> findByUsernameAndPassword(String username, String password);
-
 	Optional<AccountEntity> findByRefreshToken(String refreshToken);
 }

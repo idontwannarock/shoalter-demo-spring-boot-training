@@ -5,7 +5,10 @@ import com.shoalter.account.api.exception.ClientErrorException;
 import io.jsonwebtoken.JwtException;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -19,13 +22,16 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+@RequiredArgsConstructor
 @Slf4j
 @RestControllerAdvice
 public class ExceptionHandlers {
 
+	private final MessageSource messageSource;
+
 	@ApiResponse(
 			responseCode = "400",
-			description = "1. Unsupported media type\n2. Missing request parameter\n3. Broken input message\n4. Unsupported request method",
+			description = "1. Unsupported media type\n2. Missing request parameter\n3. Broken input message\n4. Unsupported request method\n5. Other client request error",
 			content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE))
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ExceptionHandler({
@@ -33,12 +39,17 @@ public class ExceptionHandlers {
 			MissingServletRequestParameterException.class,
 			HttpMessageNotReadableException.class,
 			HttpRequestMethodNotSupportedException.class,
-			IllegalArgumentException.class,
-			MethodArgumentNotValidException.class,
-			ClientErrorException.class
+			MethodArgumentNotValidException.class
 	})
 	public final Response<Void> handleBadRequest(Exception e) {
 		return Response.warn(e.getMessage());
+	}
+
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	@ExceptionHandler(ClientErrorException.class)
+	public final Response<Void> handleClientErrorException(ClientErrorException e) {
+		return Response.warn(messageSource.getMessage(
+				e.getI18nKey(), e.getArgs(), LocaleContextHolder.getLocale()));
 	}
 
 	/**

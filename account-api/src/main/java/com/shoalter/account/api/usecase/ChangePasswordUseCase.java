@@ -18,12 +18,12 @@ public class ChangePasswordUseCase {
 	public void start(Integer accountId, ChangePasswordRequest request) {
 		accountRepository.findById(accountId).ifPresentOrElse(account -> {
 			if (!passwordEncoder.matches(request.getCurrentPassword(), account.getPassword())) {
-				throw new ClientErrorException("Given current password is not correct");
+				throw new ClientErrorException("password.not.correct");
 			}
 			account.setPassword(passwordEncoder.encode(request.getNewPassword()));
 			accountRepository.save(account);
 		}, () -> {
-			throw new ClientErrorException("Account not exist");
+			throw new ClientErrorException("account.not.found");
 		});
 	}
 }

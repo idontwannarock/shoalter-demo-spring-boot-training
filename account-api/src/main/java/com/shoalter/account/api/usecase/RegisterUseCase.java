@@ -4,6 +4,7 @@ import com.shoalter.account.api.config.security.service.TokenUserService;
 import com.shoalter.account.api.controller.dto.response.auth.RegisterResponse;
 import com.shoalter.account.api.dao.entity.AccountEntity;
 import com.shoalter.account.api.dao.repository.AccountRepository;
+import com.shoalter.account.api.exception.ClientErrorException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -22,7 +23,7 @@ public class RegisterUseCase {
 
 	public RegisterResponse start(String username, String password) {
 		if (accountRepository.findByUsername(username).isPresent()) {
-			throw new IllegalArgumentException("Username " + username + " existed");
+			throw new ClientErrorException("username.duplicated", username);
 		}
 		return Optional.of(createUser(username, password))
 				.map(this::convertToResponse)

@@ -1,6 +1,9 @@
 package com.shoalter.account.api.dao.entity;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
@@ -27,10 +30,12 @@ public class AccountEntity {
 
 	private String refreshToken;
 
-	@Column(columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP")
+	@Column(columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP",
+			insertable = false, updatable = false)
 	private LocalDateTime createTime;
 
-	@Column(columnDefinition = "DATETIME ON UPDATE CURRENT_TIMESTAMP")
+	@Column(columnDefinition = "DATETIME ON UPDATE CURRENT_TIMESTAMP",
+			insertable = false, updatable = false)
 	private LocalDateTime updateTime;
 
 	@Override

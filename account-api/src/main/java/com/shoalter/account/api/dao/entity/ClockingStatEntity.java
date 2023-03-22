@@ -4,6 +4,7 @@ import lombok.*;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -26,6 +27,8 @@ public class ClockingStatEntity {
 	private LocalDateTime clockInTime;
 
 	private LocalDateTime clockOutTime;
+
+	private LocalDate clockingDate;
 
 	private Long durationInMilli;
 

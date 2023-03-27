@@ -6,6 +6,7 @@ import com.shoalter.account.api.dao.repository.ClockingRepository;
 import com.shoalter.account.api.exception.ClientErrorException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -17,6 +18,7 @@ public class FailClockingUseCase {
 
 	private final ClockingRepository clockingRepository;
 
+	@Transactional
 	public void start(Integer userId) {
 		accountRepository.findById(userId).ifPresentOrElse(account -> {
 			var clocking = new ClockingEntity();

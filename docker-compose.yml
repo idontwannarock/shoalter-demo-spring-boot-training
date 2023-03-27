@@ -11,6 +11,16 @@ services:
       MYSQL_PASSWORD: 123456
     ports:
       - "3306:3306"
+  account-db-slave:
+    container_name: account-db-slave
+    image: mysql:8
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: account
+      MYSQL_USER: user
+      MYSQL_PASSWORD: 123456
+    ports:
+      - "3307:3306"
   account-api:
     container_name: account-api
     build:
